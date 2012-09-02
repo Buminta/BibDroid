@@ -34,11 +34,6 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.HashSet;
 
-import net.sf.jabref.util.TXMLReader;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 public class BibtexFields
 {
   public static final String KEY_FIELD = "bibtexkey" ;
@@ -77,100 +72,93 @@ public class BibtexFields
     // FIRST: all standard fields
     // These are the fields that BibTex might want to treat, so these
     // must conform to BibTex rules.
-    add( new BibtexSingleField( "address", true, GUIGlobals.SMALL_W  ) ) ;
+    add( new BibtexSingleField( "address", true ) ) ;
     // An annotation. It is not used by the standard bibliography styles,
     // but may be used by others that produce an annotated bibliography.
     // http://www.ecst.csuchico.edu/~jacobsd/bib/formats/bibtex.html
-    add( new BibtexSingleField( "annote", true, GUIGlobals.LARGE_W  ) ) ;
-    add( new BibtexSingleField( "author", true, GUIGlobals.MEDIUM_W, 280 ) ) ;
-    add( new BibtexSingleField( "booktitle", true, 175 ) ) ;
-    add( new BibtexSingleField( "chapter", true, GUIGlobals.SMALL_W  ) ) ;
-    add( new BibtexSingleField( "crossref", true, GUIGlobals.SMALL_W ) ) ;
-    add( new BibtexSingleField( "edition", true, GUIGlobals.SMALL_W  ) ) ;
-    add( new BibtexSingleField( "editor", true, GUIGlobals.MEDIUM_W, 280  ) ) ;
-    add( new BibtexSingleField( "howpublished", true, GUIGlobals.MEDIUM_W  ) ) ;
-    add( new BibtexSingleField( "institution", true, GUIGlobals.MEDIUM_W  ) ) ;
+    add( new BibtexSingleField( "annote", true  ) ) ;
+    add( new BibtexSingleField( "author", true ) ) ;
+    add( new BibtexSingleField( "booktitle", true ) ) ;
+    add( new BibtexSingleField( "chapter", true  ) ) ;
+    add( new BibtexSingleField( "crossref", true ) ) ;
+    add( new BibtexSingleField( "edition", true  ) ) ;
+    add( new BibtexSingleField( "editor", true  ) ) ;
+    add( new BibtexSingleField( "howpublished", true  ) ) ;
+    add( new BibtexSingleField( "institution", true  ) ) ;
 
-    dummy = new BibtexSingleField( "journal", true, GUIGlobals.SMALL_W ) ;
+    dummy = new BibtexSingleField( "journal", true ) ;
     dummy.setExtras("journalNames");
     add(dummy) ;
     add( new BibtexSingleField( "key", true ) ) ;
-    add( new BibtexSingleField( "month", true, GUIGlobals.SMALL_W ) ) ;
-    add( new BibtexSingleField( "note", true, GUIGlobals.MEDIUM_W  ) ) ;
-    add( new BibtexSingleField( "number", true, GUIGlobals.SMALL_W, 60  ).setNumeric(true) ) ;
-    add( new BibtexSingleField( "organization", true, GUIGlobals.MEDIUM_W  ) ) ;
-    add( new BibtexSingleField( "pages", true, GUIGlobals.SMALL_W ) ) ;
-    add( new BibtexSingleField( "publisher", true, GUIGlobals.MEDIUM_W  ) ) ;
-    add( new BibtexSingleField( "school", true, GUIGlobals.MEDIUM_W  ) ) ;
-    add( new BibtexSingleField( "series", true, GUIGlobals.SMALL_W  ) ) ;
-    add( new BibtexSingleField( "title", true, 400 ) ) ;
-    add( new BibtexSingleField( "type", true, GUIGlobals.SMALL_W  ) ) ;
-    add( new BibtexSingleField( "language", true, GUIGlobals.SMALL_W  ) ) ;
-    add( new BibtexSingleField( "volume", true, GUIGlobals.SMALL_W, 60  ).setNumeric(true) ) ;
-    add( new BibtexSingleField( "year", true, GUIGlobals.SMALL_W, 60 ).setNumeric(true) ) ;
+    add( new BibtexSingleField( "month", true ) ) ;
+    add( new BibtexSingleField( "note", true  ) ) ;
+    add( new BibtexSingleField( "number", true ).setNumeric(true) ) ;
+    add( new BibtexSingleField( "organization", true  ) ) ;
+    add( new BibtexSingleField( "pages", true ) ) ;
+    add( new BibtexSingleField( "publisher", true  ) ) ;
+    add( new BibtexSingleField( "school", true  ) ) ;
+    add( new BibtexSingleField( "series", true  ) ) ;
+    add( new BibtexSingleField( "title", true ) ) ;
+    add( new BibtexSingleField( "type", true  ) ) ;
+    add( new BibtexSingleField( "language", true  ) ) ;
+    add( new BibtexSingleField( "volume", true ).setNumeric(true) ) ;
+    add( new BibtexSingleField( "year", true ).setNumeric(true) ) ;
 
     // some semi-standard fields
     dummy = new BibtexSingleField( KEY_FIELD, true ) ;
     dummy.setPrivate();
     add( dummy ) ;
 
-    dummy = new BibtexSingleField( "doi", true, GUIGlobals.SMALL_W ) ;
+    dummy = new BibtexSingleField( "doi", true ) ;
     dummy.setExtras("external");
     add(dummy) ;
-    add( new BibtexSingleField( "eid", true, GUIGlobals.SMALL_W  ) ) ;
+    add( new BibtexSingleField( "eid", true  ) ) ;
 
     dummy = new BibtexSingleField( "date", true ) ;
     dummy.setPrivate();
     add( dummy ) ;
 
-    add(new BibtexSingleField("pmid", false, GUIGlobals.SMALL_W, 60).setNumeric(true));
+    add(new BibtexSingleField("pmid", false).setNumeric(true));
 
     // additional fields ------------------------------------------------------
     add( new BibtexSingleField( "location", false ) ) ;
-    add( new BibtexSingleField( "abstract", false, GUIGlobals.LARGE_W, 400  ) ) ;
+    add( new BibtexSingleField( "abstract", false ) ) ;
 
-    dummy =  new BibtexSingleField( "url", false, GUIGlobals.SMALL_W) ;
+    dummy =  new BibtexSingleField( "url", false) ;
     dummy.setExtras("external");
     add(dummy) ;
 
-    dummy = new BibtexSingleField( "pdf", false, GUIGlobals.SMALL_W ) ;
+    dummy = new BibtexSingleField( "pdf", false ) ;
     dummy.setExtras("browseDoc");
     add(dummy) ;
 
-    dummy = new BibtexSingleField( "ps", false, GUIGlobals.SMALL_W ) ;
+    dummy = new BibtexSingleField( "ps", false ) ;
     dummy.setExtras("browseDocZip");
     add(dummy) ;
-    add( new BibtexSingleField( "comment", false, GUIGlobals.MEDIUM_W  ) ) ;
-    add( new BibtexSingleField( "keywords", false, GUIGlobals.SMALL_W  ) ) ;
+    add( new BibtexSingleField( "comment", false ) ) ;
+    add( new BibtexSingleField( "keywords", false ) ) ;
     //FIELD_EXTRAS.put("keywords", "selector");
 
 
-    dummy = new BibtexSingleField(GUIGlobals.FILE_FIELD, false);
-    dummy.setEditorType(GUIGlobals.FILE_LIST_EDITOR);
+    dummy = new BibtexSingleField(Globals.FILE_FIELD, false);
     add(dummy);
 
 
-    add( new BibtexSingleField( "search", false, 75 ) ) ;
+    add( new BibtexSingleField( "search", false ) ) ;
 
 
     // some internal fields ----------------------------------------------
-    dummy = new BibtexSingleField( GUIGlobals.NUMBER_COL, false, 32  ) ;
-    dummy.setPrivate() ;
-    dummy.setWriteable(false);
-    dummy.setDisplayable(false);
-    add( dummy ) ;
-
-    dummy = new BibtexSingleField( OWNER, false, GUIGlobals.SMALL_W ) ;
+    dummy = new BibtexSingleField( OWNER, false ) ;
     dummy.setExtras("setOwner");
     dummy.setPrivate();
     add(dummy) ;
 
-    dummy = new BibtexSingleField( TIMESTAMP, false, GUIGlobals.SMALL_W ) ;
+    dummy = new BibtexSingleField( TIMESTAMP, false ) ;
     dummy.setExtras("datepicker");
     dummy.setPrivate();
     add(dummy) ;
 
-    dummy =  new BibtexSingleField( ENTRYTYPE, false, 75 ) ;
+    dummy =  new BibtexSingleField( ENTRYTYPE, false ) ;
     dummy.setPrivate();
     add(dummy) ;
 
@@ -191,9 +179,6 @@ public class BibtexFields
     dummy.setWriteable(true); // This field must be written to file!
     dummy.setDisplayable(false);
     add(dummy) ;
-
-     // read external field definitions
-    readXML( Globals.additionalFields ) ;
 
     // collect all public fields for the PUBLIC_FIELDS array
     Vector<String> pFields = new Vector<String>( fieldSet.size()) ;
@@ -252,34 +237,6 @@ public class BibtexFields
     fieldSet.put( key, field ) ;
   }
 
-  /** read a xml definiton file and put only NEW fields into the field list */
-  private void readXML( String resName )
-  {
-    TXMLReader reader = new TXMLReader(resName) ;
-    if (reader.isReady() )
-    {
-      // get a list of all fields
-      NodeList fieldNodes = reader.getNodes("field") ;
-
-      int tagsCount = fieldNodes.getLength() ;
-      for (int t = 0 ; t < tagsCount ; t++)
-      {
-        Element entry = (Element) fieldNodes.item(t) ;
-        String fName = reader.readStringAttribute(entry, "name", null) ;
-        if (fName != null)  // something found ?
-        {
-          fName = fName.toLowerCase() ;
-          BibtexSingleField dummy = fieldSet.get( fName ) ;
-          if (dummy == null)  // unknown field
-          {
-            dummy = new BibtexSingleField(reader, entry) ;
-            fieldSet.put(fName, dummy) ;
-          }
-        }
-      }
-    }
-  }
-
   // --------------------------------------------------------------------------
   //  the "static area"
   // --------------------------------------------------------------------------
@@ -301,45 +258,6 @@ public class BibtexFields
       return sField.getExtras() ;
     }
     return null ;
-  }
-
-
-  public static int getEditorType(String name) {
-    BibtexSingleField sField = getField( name ) ;
-    if (sField != null)
-    {
-      return sField.getEditorType();
-    }
-    return GUIGlobals.STANDARD_EDITOR;      
-  }
-
-  public static double getFieldWeight( String name )
-  {
-    BibtexSingleField sField = getField( name ) ;
-    if (sField != null)
-    {
-      return sField.getWeight() ;
-    }
-    return GUIGlobals.DEFAULT_FIELD_WEIGHT ;
-  }
-
-  public static void setFieldWeight( String fieldName, double weight )
-  {
-    BibtexSingleField sField = getField( fieldName ) ;
-    if (sField != null)
-    {
-      sField.setWeight( weight ) ;
-    }
-  }
-
-  public static int getFieldLength( String name )
-  {
-    BibtexSingleField sField = getField( name ) ;
-    if (sField != null)
-    {
-      return sField.getLength() ;
-    }
-    return GUIGlobals.DEFAULT_FIELD_LENGTH ;
   }
 
   // returns an alternative name for the given fieldname
@@ -444,11 +362,6 @@ public class BibtexFields
     // default is: not standard, public, displayable and writable
     private int flag = DISPLAYABLE | WRITEABLE ;
 
-    private int length = GUIGlobals.DEFAULT_FIELD_LENGTH ;
-    private double weight = GUIGlobals.DEFAULT_FIELD_WEIGHT ;
-
-    private int editorType = GUIGlobals.STANDARD_EDITOR;
-
     // a alternative displayname, e.g. used for
     // "citeseercitationcount"="Popularity"
     private String alternativeDisplayName = null ;
@@ -477,81 +390,6 @@ public class BibtexFields
       name = fieldName ;
       setFlag( pStandard, STANDARD) ;
     }
-
-    public BibtexSingleField( String fieldName, boolean pStandard, double pWeight)
-    {
-      name = fieldName ;
-      setFlag( pStandard, STANDARD) ;
-      weight = pWeight ;
-    }
-
-    public BibtexSingleField( String fieldName, boolean pStandard, int pLength)
-    {
-      name = fieldName ;
-      setFlag( pStandard, STANDARD) ;
-      length = pLength ;
-    }
-
-    public BibtexSingleField( String fieldName, boolean pStandard,
-                              double pWeight, int pLength)
-    {
-      name = fieldName ;
-      setFlag( pStandard, STANDARD) ;
-      weight = pWeight ;
-      length = pLength ;
-    }
-
-    /** the constructor reads all neccessary data from the xml file */
-    public BibtexSingleField( TXMLReader reader, Element node)
-    {
-      // default is: not standard, public, displayable and writable
-      flag = DISPLAYABLE | WRITEABLE ;
-
-      name = reader.readStringAttribute(node, "name", "field") ;
-      name = name.toLowerCase() ;
-
-      // read the weight
-      String wStr = reader.readStringAttribute(node, "weight", null) ;
-      if (wStr != null)
-      {
-        int hCode = wStr.toLowerCase().hashCode() ;
-        if (hCode == "small".hashCode())
-        {
-          weight = GUIGlobals.SMALL_W ;
-        }
-        else if (hCode == "medium".hashCode())
-        {
-          weight = GUIGlobals.MEDIUM_W ;
-        }
-        else if (hCode == "large".hashCode())
-        {
-          weight = GUIGlobals.LARGE_W ;
-        }
-        else // try to convert to a double value
-        {
-          try
-          {
-            weight = Double.parseDouble(wStr) ;
-            if ((weight < 0.0) || (weight > GUIGlobals.MAX_FIELD_WEIGHT))
-            {
-              weight = GUIGlobals.DEFAULT_FIELD_WEIGHT ;
-            }
-          }
-          catch (Exception e)
-          {
-            weight = GUIGlobals.DEFAULT_FIELD_WEIGHT ;
-          }
-        }
-      }
-      length = reader.readIntegerAttribute( node, "length", GUIGlobals.DEFAULT_FIELD_LENGTH ) ;
-
-      extras = reader.readStringAttribute(node, "extras", null) ;
-    }
-
-    // -----------------------------------------------------------------------
-    // -----------------------------------------------------------------------
-
-
 
     private void setFlag( boolean onOff, int flagID)
     {
@@ -626,31 +464,6 @@ public class BibtexFields
     public String getExtras()
     {
       return extras ;
-    }
-
-    public void setEditorType(int type) {
-        editorType = type;
-    }
-
-    public int getEditorType() {
-        return editorType;
-    }
-    // -----------------------------------------------------------------------
-
-    public void setWeight( double value )
-    {
-      this.weight = value ;
-    }
-
-    public double getWeight()
-    {
-      return this.weight ;
-    }
-
-    // -----------------------------------------------------------------------
-    public int getLength()
-    {
-      return this.length ;
     }
 
     // -----------------------------------------------------------------------

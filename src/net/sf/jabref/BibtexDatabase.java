@@ -57,8 +57,6 @@ public class BibtexDatabase {
 
 	Vector<String> _strings_ = new Vector<String>();
 
-	Set<DatabaseChangeListener> changeListeners = new HashSet<DatabaseChangeListener>();
-
     private boolean followCrossrefs = true;
 
 	/**
@@ -161,9 +159,7 @@ public class BibtexDatabase {
                 "ID is already in use, please choose another");
         }
         _entries.put(id, entry);
-
-        fireDatabaseChanged(new DatabaseChangeEvent(this, DatabaseChangeEvent.ADDED_ENTRY, entry));
-
+        
         return checkForDuplicateKeyAndAdd(null, entry.getCiteKey(), false);
     }
 
@@ -478,23 +474,7 @@ public class BibtexDatabase {
                                 allKeys.put( key, Integer.valueOf( (tI).intValue() - 1));//decrementInteger( tI ));
                 }
     }
-
-
-
-    public void fireDatabaseChanged(DatabaseChangeEvent e) {
-    	for (DatabaseChangeListener listener : changeListeners){
-    		listener.databaseChanged(e);
-        }
-    }
-
-    public void addDatabaseChangeListener(DatabaseChangeListener l) {
-        changeListeners.add(l);
-    }
-
-    public void removeDatabaseChangeListener(DatabaseChangeListener l) {
-        changeListeners.remove(l);
-    }
-
+    
 	/**
 	 * Returns the text stored in the given field of the given bibtex entry
 	 * which belongs to the given database.

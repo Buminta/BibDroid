@@ -43,7 +43,6 @@ import net.sf.jabref.BibtexEntryType;
 import net.sf.jabref.BibtexFields;
 import net.sf.jabref.BibtexString;
 import net.sf.jabref.CustomEntryType;
-import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 import net.sf.jabref.JabRefPreferences;
 import net.sf.jabref.KeyCollisionException;
@@ -163,7 +162,7 @@ public class BibtexParser {
 
 			if (pat1.matcher(str).find())
 				return true;
-			else if (str.startsWith(GUIGlobals.SIGNATURE))
+			else if (str.startsWith(Globals.SIGNATURE))
 				return true;
 		}
 
@@ -302,18 +301,18 @@ public class BibtexParser {
 						 */
 						String comment = commentBuf.toString().replaceAll("[\\x0d\\x0a]", "");
 						if (comment.substring(0,
-							Math.min(comment.length(), GUIGlobals.META_FLAG.length())).equals(
-							GUIGlobals.META_FLAG)
+							Math.min(comment.length(), Globals.META_FLAG.length())).equals(
+							Globals.META_FLAG)
 							|| comment.substring(0,
-								Math.min(comment.length(), GUIGlobals.META_FLAG_OLD.length()))
-								.equals(GUIGlobals.META_FLAG_OLD)) {
+								Math.min(comment.length(), Globals.META_FLAG_OLD.length()))
+								.equals(Globals.META_FLAG_OLD)) {
 
 							String rest;
-							if (comment.substring(0, GUIGlobals.META_FLAG.length()).equals(
-								GUIGlobals.META_FLAG))
-								rest = comment.substring(GUIGlobals.META_FLAG.length());
+							if (comment.substring(0, Globals.META_FLAG.length()).equals(
+								Globals.META_FLAG))
+								rest = comment.substring(Globals.META_FLAG.length());
 							else
-								rest = comment.substring(GUIGlobals.META_FLAG_OLD.length());
+								rest = comment.substring(Globals.META_FLAG_OLD.length());
 
 							int pos = rest.indexOf(':');
 
@@ -331,8 +330,8 @@ public class BibtexParser {
 						 * @comment:
 						 */
 						if (comment.substring(0,
-							Math.min(comment.length(), GUIGlobals.ENTRYTYPE_FLAG.length())).equals(
-							GUIGlobals.ENTRYTYPE_FLAG)) {
+							Math.min(comment.length(), Globals.ENTRYTYPE_FLAG.length())).equals(
+							Globals.ENTRYTYPE_FLAG)) {
 
 							CustomEntryType typ = CustomEntryType.parseEntryType(comment);
 							entryTypes.put(typ.getName().toLowerCase(), typ);
@@ -1003,7 +1002,7 @@ public class BibtexParser {
             headerText.append((char) c);
             if ((piv == 0) && (Character.isWhitespace((char) c) || (c == '%')))
                 read();
-            else if (c == GUIGlobals.SIGNATURE.charAt(piv)) {
+            else if (c == Globals.SIGNATURE.charAt(piv)) {
                 piv++;
                 read();
             }
@@ -1013,7 +1012,7 @@ public class BibtexParser {
             }
 
             // Check if we've reached the end of the signature's standard part:
-            if (piv == GUIGlobals.SIGNATURE.length()) {
+            if (piv == Globals.SIGNATURE.length()) {
                 keepon = false;
 
                 // Found the standard part. Now read the version number:

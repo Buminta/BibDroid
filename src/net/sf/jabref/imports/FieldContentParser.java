@@ -16,7 +16,6 @@
 package net.sf.jabref.imports;
 
 import net.sf.jabref.Globals;
-import net.sf.jabref.GUIGlobals;
 
 
 /**
@@ -128,7 +127,7 @@ public class FieldContentParser {
                 	
                 	// Yes, of course we have, but in Filenames it is nessary to have all spaces. :-)
                 	// This is the reason why the next lines are required
-                	if(key != null && key.equals(GUIGlobals.FILE_FIELD)){
+                	if(key != null && key.equals(Globals.FILE_FIELD)){
                 		i++;
                 	}
                 	else

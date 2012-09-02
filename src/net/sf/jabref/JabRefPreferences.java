@@ -75,16 +75,7 @@ public class JabRefPreferences {
 	}
 
     // The constructor is made private to enforce this as a singleton class:
-    private JabRefPreferences() {
-
-        try {
-            if (new File("jabref.xml").exists()){
-                importPreferences("jabref.xml");
-            }
-        } catch (IOException e) {
-            Globals.logger("Could not import preferences from jabref.xml:" + e.getLocalizedMessage());
-        }
-        
+    private JabRefPreferences() {        
         prefs = Preferences.userNodeForPackage(JabRefPreferences.class);
         
         defaults.put("useDefaultLookAndFeel", Boolean.TRUE);
@@ -118,7 +109,6 @@ public class JabRefPreferences {
         defaults.put("columnWidths","75;280;400;60;100;100;100;100");
         defaults.put("xmpPrivacyFilters", "pdf;timestamp;keywords;owner;note;review");
         defaults.put("useXmpPrivacyFilter", Boolean.FALSE);
-        defaults.put("numberColWidth",Integer.valueOf(GUIGlobals.NUMBER_COL_LENGTH));
         defaults.put("workingDirectory", System.getProperty("user.home"));
         defaults.put("exportWorkingDirectory", System.getProperty("user.home"));
         defaults.put("importWorkingDirectory", System.getProperty("user.home"));
@@ -366,8 +356,6 @@ public class JabRefPreferences {
         defaults.put(REG_EXP_SEARCH_EXPRESSION_KEY, defaultExpression);
         defaults.put(USE_REG_EXP_SEARCH_KEY, Boolean.FALSE);
         defaults.put("useIEEEAbrv", Boolean.TRUE);
-
-	defaults.put("userFileDir", GUIGlobals.FILE_FIELD + "Directory");
     }
     
     public static final String DEFAULT_REG_EXP_SEARCH_EXPRESSION_KEY = "defaultRegExpSearchExpression";
@@ -542,24 +530,6 @@ public class JabRefPreferences {
      */
     public HashMap<String, String> getDefaultKeys() {
         return defKeyBinds;
-    }
-
-    /**
-     * Calling this method will write all preferences into the preference store.
-     */
-    public void flush() {
-        if (getBoolean("memoryStickMode")){
-            try {
-                exportPreferences("jabref.xml");
-            } catch (IOException e) {
-                Globals.logger("Could not save preferences for memory stick mode: " + e.getLocalizedMessage());
-            }
-        }
-        try {
-            prefs.flush();
-        } catch (BackingStoreException ex) {
-            ex.printStackTrace();
-        }
     }
 
     /**

@@ -204,7 +204,7 @@ public class CustomEntryType extends BibtexEntryType {
 
     public void save(Writer out) throws IOException {
 	out.write("@comment{");
-	out.write(GUIGlobals.ENTRYTYPE_FLAG);
+	out.write(Globals.ENTRYTYPE_FLAG);
 	out.write(getName());
 	out.write(": req[");
     out.write(getRequiredFieldsString());
@@ -232,7 +232,7 @@ public class CustomEntryType extends BibtexEntryType {
 	    //	|| comment
 	    //System.out.println(">"+comment+"<");
 	    String rest;
-	    rest = comment.substring(GUIGlobals.ENTRYTYPE_FLAG.length());
+	    rest = comment.substring(Globals.ENTRYTYPE_FLAG.length());
 	    int nPos = rest.indexOf(':');
 	    String name = rest.substring(0, nPos);
 	    rest = rest.substring(nPos+2);
@@ -247,7 +247,6 @@ public class CustomEntryType extends BibtexEntryType {
 	    //System.out.println("o '"+optFields+"'");
 	    return new CustomEntryType(name, reqFields, optFields);
 	} catch (IndexOutOfBoundsException ex) {
-	    Globals.logger("Ill-formed entrytype comment in BibTeX file.");
 	    return null;
 	}
 

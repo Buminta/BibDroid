@@ -1,6 +1,6 @@
 package com.peterdn.bibdroid;
 
-import com.peterdn.bibdroid.dummy.DummyContent;
+import net.sf.jabref.BibtexEntry;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 public class EntryDetailFragment extends Fragment {
 
-    public static final String ARG_ITEM_ID = "item_id";
-
-    DummyContent.DummyItem mItem;
+    BibtexEntry mItem;
 
     public EntryDetailFragment() {
     }
@@ -21,9 +19,8 @@ public class EntryDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-        }
+        ParcelableBibtexEntry parcel = getArguments().getParcelable(null);
+        mItem = parcel.getBibtexEntry();
     }
 
     @Override
@@ -31,7 +28,7 @@ public class EntryDetailFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_entry_detail, container, false);
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.entry_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.entry_detail)).setText(mItem.toString());
         }
         return rootView;
     }

@@ -17,8 +17,8 @@ public class EntryDetailActivity extends FragmentActivity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(EntryDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(EntryDetailFragment.ARG_ITEM_ID));
+            arguments.putParcelable(null,
+                    getIntent().getParcelableExtra(null));
             EntryDetailFragment fragment = new EntryDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

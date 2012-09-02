@@ -25,12 +25,10 @@ import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -47,20 +45,6 @@ import java.util.regex.Pattern;
  * utility functions
  */
 public class Util {
-
-	/**
-	 * A static Object for date formatting. Please do not create the object
-	 * here, because there are some references from the Globals class.....
-	 * 
-	 */
-	private static SimpleDateFormat dateFormatter = null;
-
-	/*
-	 * Integer values for indicating result of duplicate check (for entries):
-	 * 
-	 */
-	final static int TYPE_MISMATCH = -1, NOT_EQUAL = 0, EQUAL = 1, EMPTY_IN_ONE = 2,
-		EMPTY_IN_TWO = 3, EMPTY_IN_BOTH = 4;
 
 	final static NumberFormat idFormat;
 
@@ -341,52 +325,6 @@ public class Util {
 			}
 		}
 		return out.toString();// .replaceAll("\n", "\n\t");
-	}
-
-	public static TreeSet<String> findDeliminatedWordsInField(BibtexDatabase db, String field,
-		String deliminator) {
-		TreeSet<String> res = new TreeSet<String>();
-		
-		for (String s : db.getKeySet()){
-			BibtexEntry be = db.getEntryById(s);
-			Object o = be.getField(field);
-			if (o != null) {
-				String fieldValue = o.toString().trim();
-				StringTokenizer tok = new StringTokenizer(fieldValue, deliminator);
-				while (tok.hasMoreTokens())
-					res.add(nCase(tok.nextToken().trim()));
-			}
-		}
-		return res;
-	}
-
-	/**
-	 * Returns a HashMap containing all words used in the database in the given
-	 * field type. Characters in
-	 * 
-	 * @param remove
-	 *            are not included.
-	 * @param db
-	 *            a <code>BibtexDatabase</code> value
-	 * @param field
-	 *            a <code>String</code> value
-	 * @param remove
-	 *            a <code>String</code> value
-	 * @return a <code>HashSet</code> value
-	 */
-	public static TreeSet<String> findAllWordsInField(BibtexDatabase db, String field, String remove) {
-		TreeSet<String> res = new TreeSet<String>();
-		StringTokenizer tok;
-		for (String s : db.getKeySet()){
-			BibtexEntry be = db.getEntryById(s);
-			Object o = be.getField(field);
-			if (o != null) {
-				tok = new StringTokenizer(o.toString(), remove, false);
-				while (tok.hasMoreTokens())
-					res.add(nCase(tok.nextToken().trim()));
-			}
-		}
-		return res;
 	}
 
 	/**
@@ -1058,33 +996,6 @@ public class Util {
 			}
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * Creates a String containing the current date (and possibly time),
-	 * formatted according to the format set in preferences under the key
-	 * "timeStampFormat".
-	 * 
-	 * @return The date string.
-	 */
-	public static String easyDateFormat() {
-		// Date today = new Date();
-		return easyDateFormat(new Date());
-	}
-
-	/**
-	 * Creates a readable Date string from the parameter date. The format is set
-	 * in preferences under the key "timeStampFormat".
-	 * 
-	 * @return The formatted date string.
-	 */
-	public static String easyDateFormat(Date date) {
-		// first use, create an instance
-		if (dateFormatter == null) {
-			String format = Globals.prefs.get("timeStampFormat");
-			dateFormatter = new SimpleDateFormat(format);
-		}
-		return dateFormatter.format(date);
 	}
 
 	/**

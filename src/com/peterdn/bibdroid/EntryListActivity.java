@@ -1,19 +1,10 @@
 package com.peterdn.bibdroid;
 
 
-import java.io.FileReader;
-
-import java.util.Collection;
-
-import net.sf.jabref.BibtexDatabase;
 import net.sf.jabref.BibtexEntry;
-import net.sf.jabref.imports.BibtexParser;
-import net.sf.jabref.imports.ParserResult;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-
-import android.util.Log;
 
 
 public class EntryListActivity extends FragmentActivity
@@ -32,30 +23,15 @@ public class EntryListActivity extends FragmentActivity
                     .findFragmentById(R.id.entry_list))
                     .setActivateOnItemClick(true);
         }
-        
-        try {
-			FileReader in = new FileReader("/sdcard/refs.bib");
-	        BibtexParser parser = new BibtexParser(in);
-	        ParserResult result = parser.parse();
-	        BibtexDatabase database = result.getDatabase();
-	        Collection<BibtexEntry> entries = database.getEntries();
-	        Log.i("BibDroid", ((Integer)entries.size()).toString());
-	        for (BibtexEntry entry : entries) {
-	        	String key = entry.getCiteKey();
-	        	Log.i("BibDroid", key);
-	        }
-	        in.close();
-		} catch (Exception e) {
-			Log.e("BibDroid", e.toString());
-		}
-        
     }
 
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(BibtexEntry entry) {
+        ParcelableBibtexEntry parcelableEntry = new ParcelableBibtexEntry(entry);
+
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putString(EntryDetailFragment.ARG_ITEM_ID, id);
+            arguments.putParcelable(null, parcelableEntry);
             EntryDetailFragment fragment = new EntryDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -64,7 +40,7 @@ public class EntryListActivity extends FragmentActivity
 
         } else {
             Intent detailIntent = new Intent(this, EntryDetailActivity.class);
-            detailIntent.putExtra(EntryDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(null, parcelableEntry);
             startActivity(detailIntent);
         }
     }

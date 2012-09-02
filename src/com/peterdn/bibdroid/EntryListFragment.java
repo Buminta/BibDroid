@@ -1,11 +1,12 @@
 package com.peterdn.bibdroid;
 
-import com.peterdn.bibdroid.dummy.DummyContent;
+import net.sf.jabref.BibtexEntry;
 
 import android.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,14 +18,15 @@ public class EntryListFragment extends ListFragment {
     private Callbacks mCallbacks = sDummyCallbacks;
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
+    private BibtexContent _content = null;
+    
     public interface Callbacks {
-
-        public void onItemSelected(String id);
+        public void onItemSelected(BibtexEntry entry);
     }
 
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(BibtexEntry entry) {
         }
     };
 
@@ -33,11 +35,17 @@ public class EntryListFragment extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+    	try {
+			_content = new BibtexContent("/sdcard/refs.bib");
+		} catch (Exception e) {
+			Log.e("BibDroid", e.toString());
+		}
+
+    	super.onCreate(savedInstanceState);
+        setListAdapter(new ArrayAdapter<BibtexEntry>(getActivity(),
                 R.layout.simple_list_item_activated_1,
                 R.id.text1,
-                DummyContent.ITEMS));
+                _content.entries));
     }
 
     @Override
@@ -68,7 +76,7 @@ public class EntryListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(_content.entries.get(position));
     }
 
     @Override

@@ -219,7 +219,7 @@ public class GUIGlobals {
 			String[] lines = buffer.toString().split("\n");
 			for (int i=0; i<lines.length; i++) {
 				String line = lines[i].trim();
-				int index = line.indexOf("=");
+				int index = line.indexOf('=');
 				if (index >= 0) {
 					String key = line.substring(0, index).trim();
 					String value = prefix+line.substring(index+1).trim();

@@ -18,7 +18,7 @@ package net.sf.jabref.util;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import net.sf.jabref.Globals;
+
 
 /**
  * This class redirects the System.err stream so it goes both the way it normally

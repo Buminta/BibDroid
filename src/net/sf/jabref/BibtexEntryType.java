@@ -29,7 +29,7 @@ Modified for use in JabRef.
 */
 package net.sf.jabref;
 
-import java.util.Iterator;
+
 import java.util.TreeMap;
 import java.util.Locale;
 
@@ -968,42 +968,6 @@ public abstract class BibtexEntryType implements Comparable<BibtexEntryType>
 	    ALL_TYPES.put(nm, STANDARD_TYPES.get(nm));
 	}
 
-    }
-
-    /**
-     * Load all custom entry types from preferences. This method is
-     * called from JabRef when the program starts.
-     */
-    public static void loadCustomEntryTypes(JabRefPreferences prefs) {
-	int number = 0;
-	CustomEntryType type;
-	while ((type = prefs.getCustomEntryType(number)) != null) {
-	    ALL_TYPES.put(type.getName().toLowerCase(), type);
-	    number++;
-	}
-    }
-
-    /**
-     * Iterate through all entry types, and store those that are
-     * custom defined to preferences. This method is called from
-     * JabRefFrame when the program closes.
-     */
-    public static void saveCustomEntryTypes(JabRefPreferences prefs) {
-	Iterator<String> i=ALL_TYPES.keySet().iterator();
-	int number = 0;
-	//Vector customTypes = new Vector(10, 10);
-	while (i.hasNext()) {
-	    Object o=ALL_TYPES.get(i.next());
-	    if (o instanceof CustomEntryType) {
-		// Store this entry type.
-		prefs.storeCustomEntryType((CustomEntryType)o, number);
-		number++;
-	    }
-	}
-	// Then, if there are more 'old' custom types defined, remove these
-	// from preferences. This is necessary if the number of custom types
-	// has decreased.
-	prefs.purgeCustomEntryTypes(number);
     }
 
     /**

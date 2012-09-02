@@ -471,10 +471,6 @@ public class BibtexFields
     // private HashMap props = new HashMap() ;
 
     // some constructors ;-)
-    public BibtexSingleField( String fieldName )
-    {
-      name = fieldName ;
-    }
 
     public BibtexSingleField( String fieldName, boolean pStandard )
     {
@@ -588,16 +584,6 @@ public class BibtexFields
       flag = flag | PRIVATE ;
     }
 
-    public boolean isPrivate()
-    {
-      return isSet( PRIVATE ) ;
-    }
-
-    public void setPublic()
-    {
-      setFlag( false, PRIVATE ) ;
-    }
-
     public boolean isPublic()
     {
       return !isSet( PRIVATE ) ;
@@ -622,12 +608,6 @@ public class BibtexFields
     public boolean isWriteable()
     {
       return isSet( WRITEABLE ) ;
-    }
-
-    // -----------------------------------------------------------------------
-    public void setAlternativeDisplayName( String aName)
-    {
-      alternativeDisplayName = aName ;
     }
 
     public String getAlternativeDisplayName()

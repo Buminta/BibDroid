@@ -23,39 +23,21 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
+
+
 import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.InvalidPreferencesFormatException;
 import java.util.prefs.Preferences;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+
+
 
 
 public class JabRefPreferences {
-
-    public final static String
-        CUSTOM_TYPE_NAME = "customTypeName_",
-        CUSTOM_TYPE_REQ = "customTypeReq_",
-        CUSTOM_TYPE_OPT = "customTypeOpt_",
-        CUSTOM_TYPE_PRIOPT = "customTypePriOpt_",
-        CUSTOM_TAB_NAME = "customTabName_",
-        CUSTOM_TAB_FIELDS = "customTabFields_",
-        EMACS_PATH = "emacsPath",
-        EMACS_ADDITIONAL_PARAMETERS = "emacsParameters",
-        EMACS_23 = "emacsUseV23InsertString",
-        EDIT_GROUP_MEMBERSHIP_MODE = "groupEditGroupMembershipMode";
-    
-
-    // This String is used in the encoded list in prefs of external file type
-    // modifications, in order to indicate a removed default file type:
-    public static final String FILE_TYPE_REMOVED_FLAG = "REMOVED";
-
     public String WRAPPED_USERNAME, MARKING_WITH_NUMBER_PATTERN;
 
     Preferences prefs;
@@ -105,47 +87,14 @@ public class JabRefPreferences {
         
         prefs = Preferences.userNodeForPackage(JabRefPreferences.class);
         
-        if (Globals.osName.equals(Globals.MAC)) {
-			//defaults.put("pdfviewer", "/Applications/Preview.app");
-			//defaults.put("psviewer", "/Applications/Preview.app");
-			//defaults.put("htmlviewer", "/Applications/Safari.app");
-        	defaults.put(EMACS_PATH, "emacsclient");
-        	defaults.put(EMACS_23, true);
-        	defaults.put(EMACS_ADDITIONAL_PARAMETERS, "-n -e");
-            defaults.put("fontFamily", "SansSerif");
-
-		} else if (Globals.osName.toLowerCase().startsWith("windows")) {
-			//defaults.put("pdfviewer", "cmd.exe /c start /b");
-			//defaults.put("psviewer", "cmd.exe /c start /b");
-			//defaults.put("htmlviewer", "cmd.exe /c start /b");
-			defaults.put("lookAndFeel", "com.jgoodies.looks.windows.WindowsLookAndFeel");
-            defaults.put("winEdtPath", "C:\\Program Files\\WinEdt Team\\WinEdt\\WinEdt.exe");
-            defaults.put("latexEditorPath", "C:\\Program Files\\LEd\\LEd.exe");
-        	defaults.put(EMACS_PATH, "emacsclient.exe");
-        	defaults.put(EMACS_23, true);
-        	defaults.put(EMACS_ADDITIONAL_PARAMETERS, "-n -e");
-            defaults.put("fontFamily", "Arial");
-
-        } else {
-			//defaults.put("pdfviewer", "evince");
-			//defaults.put("psviewer", "gv");
-			//defaults.put("htmlviewer", "firefox");
-			defaults.put("lookAndFeel", "com.jgoodies.plaf.plastic.Plastic3DLookAndFeel");
-            defaults.put("fontFamily", "SansSerif");
-            
-        	// linux
-        	defaults.put(EMACS_PATH, "gnuclient");
-        	defaults.put(EMACS_23, false);
-        	defaults.put(EMACS_ADDITIONAL_PARAMETERS, "-batch -eval");
-		}
         defaults.put("useDefaultLookAndFeel", Boolean.TRUE);
         defaults.put("lyxpipe", System.getProperty("user.home")+File.separator+".lyx/lyxpipe");
         defaults.put("vim", "vim");
         defaults.put("vimServer", "vim");
-        defaults.put("posX", new Integer(0));
-        defaults.put("posY", new Integer(0));
-        defaults.put("sizeX", new Integer(840));
-        defaults.put("sizeY", new Integer(680));
+        defaults.put("posX", Integer.valueOf(0));
+        defaults.put("posY", Integer.valueOf(0));
+        defaults.put("sizeX", Integer.valueOf(840));
+        defaults.put("sizeY", Integer.valueOf(680));
         defaults.put("windowMaximised", Boolean.FALSE);
         defaults.put("previewPanelHeight", 200);
         defaults.put("entryEditorHeight", 400);
@@ -169,21 +118,21 @@ public class JabRefPreferences {
         defaults.put("columnWidths","75;280;400;60;100;100;100;100");
         defaults.put("xmpPrivacyFilters", "pdf;timestamp;keywords;owner;note;review");
         defaults.put("useXmpPrivacyFilter", Boolean.FALSE);
-        defaults.put("numberColWidth",new Integer(GUIGlobals.NUMBER_COL_LENGTH));
+        defaults.put("numberColWidth",Integer.valueOf(GUIGlobals.NUMBER_COL_LENGTH));
         defaults.put("workingDirectory", System.getProperty("user.home"));
         defaults.put("exportWorkingDirectory", System.getProperty("user.home"));
         defaults.put("importWorkingDirectory", System.getProperty("user.home"));
         defaults.put("fileWorkingDirectory", System.getProperty("user.home"));
         defaults.put("autoOpenForm", Boolean.TRUE);
-        defaults.put("entryTypeFormHeightFactor", new Integer(1));
-        defaults.put("entryTypeFormWidth", new Integer(1));
+        defaults.put("entryTypeFormHeightFactor", Integer.valueOf(1));
+        defaults.put("entryTypeFormWidth", Integer.valueOf(1));
         defaults.put("backup", Boolean.TRUE);
         defaults.put("openLastEdited", Boolean.TRUE);
         defaults.put("lastEdited", null);
-        defaults.put("stringsPosX", new Integer(0));
-        defaults.put("stringsPosY", new Integer(0));
-        defaults.put("stringsSizeX", new Integer(600));
-        defaults.put("stringsSizeY", new Integer(400));
+        defaults.put("stringsPosX", Integer.valueOf(0));
+        defaults.put("stringsPosY", Integer.valueOf(0));
+        defaults.put("stringsSizeX", Integer.valueOf(600));
+        defaults.put("stringsSizeY", Integer.valueOf(400));
         defaults.put("defaultShowSource", Boolean.FALSE);
         defaults.put("showSource", Boolean.TRUE);
         defaults.put("defaultAutoSort", Boolean.FALSE);
@@ -202,8 +151,8 @@ public class JabRefPreferences {
         defaults.put("selectS", Boolean.FALSE);
         defaults.put("regExpSearch", Boolean.TRUE);
         defaults.put("highLightWords", Boolean.TRUE);
-        defaults.put("searchPanePosX", new Integer(0));
-        defaults.put("searchPanePosY", new Integer(0));
+        defaults.put("searchPanePosX", Integer.valueOf(0));
+        defaults.put("searchPanePosY", Integer.valueOf(0));
         defaults.put("autoComplete", Boolean.TRUE);
         defaults.put("autoCompleteFields", "author;editor;title;journal;publisher;keywords;crossref");
         defaults.put("autoCompFF", Boolean.FALSE);
@@ -222,12 +171,11 @@ public class JabRefPreferences {
         defaults.put("groupAutoHide", Boolean.TRUE);
         defaults.put("autoAssignGroup", Boolean.TRUE);
         defaults.put("groupKeywordSeparator", ", ");
-        defaults.put(EDIT_GROUP_MEMBERSHIP_MODE, Boolean.FALSE);
         defaults.put("highlightGroupsMatchingAny", Boolean.FALSE);
         defaults.put("highlightGroupsMatchingAll", Boolean.FALSE);
         defaults.put("searchPanelVisible", Boolean.FALSE);
         defaults.put("defaultEncoding", System.getProperty("file.encoding"));
-        defaults.put("groupsVisibleRows", new Integer(8));
+        defaults.put("groupsVisibleRows", Integer.valueOf(8));
         defaults.put("defaultOwner", System.getProperty("user.name"));
         defaults.put("preserveFieldFormatting", Boolean.FALSE);
         defaults.put("memoryStickMode", Boolean.FALSE);
@@ -241,11 +189,11 @@ public class JabRefPreferences {
         defaults.put("customIconThemeFile", "/home/alver/div/crystaltheme_16/Icons.properties");
 
         //defaults.put("recentFiles", "/home/alver/Documents/bibk_dok/hovedbase.bib");
-        defaults.put("historySize", new Integer(8));
-        defaults.put("fontSize", new Integer(12));
+        defaults.put("historySize", Integer.valueOf(8));
+        defaults.put("fontSize", Integer.valueOf(12));
         defaults.put("overrideDefaultFonts", Boolean.FALSE);
         defaults.put("menuFontFamily", "Times");
-        defaults.put("menuFontSize", new Integer(11));
+        defaults.put("menuFontSize", Integer.valueOf(11));
         // Main table color settings:
         defaults.put("tableBackground", "255:255:255");
         defaults.put("tableReqFieldBackground", "230:235:255");
@@ -351,7 +299,7 @@ public class JabRefPreferences {
         defaults.put("generateKeysBeforeSaving", Boolean.FALSE);
 
         defaults.put("useRemoteServer", Boolean.FALSE);
-        defaults.put("remoteServerPort", new Integer(6050));
+        defaults.put("remoteServerPort", Integer.valueOf(6050));
 
         defaults.put("personalJournalList", null);
         defaults.put("externalJournalLists", null);
@@ -366,12 +314,12 @@ public class JabRefPreferences {
         defaults.put("filechooserDisableRename", Boolean.TRUE);
 
         defaults.put("lastUsedExport", null);
-        defaults.put("sidePaneWidth", new Integer(-1));
+        defaults.put("sidePaneWidth", Integer.valueOf(-1));
 
-        defaults.put("importInspectionDialogWidth", new Integer(650));
-        defaults.put("importInspectionDialogHeight", new Integer(650));
-        defaults.put("searchDialogWidth", new Integer(650));
-        defaults.put("searchDialogHeight", new Integer(500));
+        defaults.put("importInspectionDialogWidth", Integer.valueOf(650));
+        defaults.put("importInspectionDialogHeight", Integer.valueOf(650));
+        defaults.put("searchDialogWidth", Integer.valueOf(650));
+        defaults.put("searchDialogHeight", Integer.valueOf(500));
         defaults.put("showFileLinksUpgradeWarning", Boolean.TRUE);
         defaults.put("autolinkExactKeyOnly", Boolean.TRUE);
         defaults.put("numericFields", "mittnum;author");
@@ -420,23 +368,6 @@ public class JabRefPreferences {
         defaults.put("useIEEEAbrv", Boolean.TRUE);
 
 	defaults.put("userFileDir", GUIGlobals.FILE_FIELD + "Directory");
-    }
-
-    public void setLanguageDependentDefaultValues() {
-
-        // Entry editor tab 0:
-        defaults.put(CUSTOM_TAB_NAME+"_def0", Globals.lang("General"));
-            defaults.put(CUSTOM_TAB_FIELDS+"_def0", "crossref;keywords;file;doi;url;"+
-                         "comment;owner;timestamp");
-
-        // Entry editor tab 1:
-            defaults.put(CUSTOM_TAB_FIELDS+"_def1", "abstract");
-        defaults.put(CUSTOM_TAB_NAME+"_def1", Globals.lang("Abstract"));
-
-      // Entry editor tab 2: Review Field - used for research comments, etc.
-            defaults.put(CUSTOM_TAB_FIELDS+"_def2", "review");
-        defaults.put(CUSTOM_TAB_NAME+"_def2", Globals.lang("Review"));
-
     }
     
     public static final String DEFAULT_REG_EXP_SEARCH_EXPRESSION_KEY = "defaultRegExpSearchExpression";
@@ -557,7 +488,7 @@ public class JabRefPreferences {
             StringBuffer linked = new StringBuffer();
             for (int i=0; i<value.length-1; i++) {
                 linked.append(makeEscape(value[i]));
-                linked.append(";");
+                linked.append(';');
             }
             linked.append(makeEscape(value[value.length-1]));
             put(key, linked.toString());
@@ -821,61 +752,7 @@ public class JabRefPreferences {
         }
         return sb.toString();
     }
-
-    /**
-     * Stores all information about the entry type in preferences, with
-     * the tag given by number.
-     */
-    public void storeCustomEntryType(CustomEntryType tp, int number) {
-        String nr = ""+number;
-        put(CUSTOM_TYPE_NAME+nr, tp.getName());
-        put(CUSTOM_TYPE_REQ+nr, tp.getRequiredFieldsString());//tp.getRequiredFields());
-        putStringArray(CUSTOM_TYPE_OPT+nr, tp.getOptionalFields());
-        putStringArray(CUSTOM_TYPE_PRIOPT+nr, tp.getPrimaryOptionalFields());
-
-    }
-
-    /**
-     * Retrieves all information about the entry type in preferences,
-     * with the tag given by number.
-     */
-    public CustomEntryType getCustomEntryType(int number) {
-        String nr = ""+number;
-        String
-            name = get(CUSTOM_TYPE_NAME+nr);
-        String[]
-            req = getStringArray(CUSTOM_TYPE_REQ+nr),
-            opt = getStringArray(CUSTOM_TYPE_OPT+nr),
-            priOpt = getStringArray(CUSTOM_TYPE_PRIOPT+nr);
-        if (name == null)
-            return null;
-        if (priOpt == null) {
-            return new CustomEntryType(Util.nCase(name), req, opt);
-        }
-        ArrayList<String> secOpt = new ArrayList<String>();
-        for (int i = 0; i < opt.length; i++) {
-            secOpt.add(opt[i]);
-        }
-        for (int i = 0; i < priOpt.length; i++) {
-            secOpt.remove(priOpt[i]);
-        }
-        return new CustomEntryType(Util.nCase(name), req, priOpt,
-                secOpt.toArray(new String[secOpt.size()]));
-
-
-    }
-
-    /**
-     * Removes all information about custom entry types with tags of
-     * @param number or higher.
-     */
-    public void purgeCustomEntryTypes(int number) {
-        purgeSeries(CUSTOM_TYPE_NAME, number);
-        purgeSeries(CUSTOM_TYPE_REQ, number);
-        purgeSeries(CUSTOM_TYPE_OPT, number);
-        purgeSeries(CUSTOM_TYPE_PRIOPT, number);
-    }
-
+    
     /**
      * Removes all entries keyed by prefix+number, where number
      * is equal to or higher than the given number.

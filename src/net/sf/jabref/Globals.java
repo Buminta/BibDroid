@@ -15,8 +15,8 @@
 */
 package net.sf.jabref;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,23 +37,6 @@ import net.sf.jabref.util.TBuildInfo;
 
 
 public class Globals {
-
-	private static int SHORTCUT_MASK = -1;
-    public static int
-		FUTURE_YEAR = 2050, // Needs to give a year definitely in the future.
-		// Used for guessing the
-		// year field when parsing textual data. :-)
-
-		STANDARD_EXPORT_COUNT = 5, // The number of standard export formats.
-		METADATA_LINE_LENGTH = 70; // The line length used to wrap metadata.
-    
-    // used at highlighting in preview area. 
-    // Color chosen similar to JTextComponent.getSelectionColor(), which is
-    // used at highlighting words at the editor 
-    public static final String highlightColor = "#3399FF";
-
-	private static String resourcePrefix = "resource/JabRef", menuResourcePrefix = "resource/Menu",
-		integrityResourcePrefix = "resource/IntegrityMessage";
 
 	private static final String buildInfos = "/resource/build.properties";
 
@@ -217,14 +200,6 @@ public class Globals {
 			});
 	}
 
-	public static void setLanguage(String language, String country) {
-        locale = new Locale(language, country);
-		messages = ResourceBundle.getBundle(resourcePrefix, locale);
-		menuTitles = ResourceBundle.getBundle(menuResourcePrefix, locale);
-		intMessages = ResourceBundle.getBundle(integrityResourcePrefix, locale);
-        Locale.setDefault(locale);
-	}
-
 	public static String lang(String key, String[] params) {
 		String translation = null;
 		try {
@@ -327,26 +302,6 @@ public class Globals {
 			return key;
 		}
 	}
-
-	// ============================================================
-	// Using the hashmap of entry types found in BibtexEntryType
-	// ============================================================
-	public static BibtexEntryType getEntryType(String type) {
-		// decide which entryType object to return
-		Object o = BibtexEntryType.ALL_TYPES.get(type);
-		if (o != null) {
-			return (BibtexEntryType) o;
-		} else {
-			return BibtexEntryType.OTHER;
-		}
-		/*
-		 * if(type.equals("article")) return BibtexEntryType.ARTICLE; else
-		 * if(type.equals("book")) return BibtexEntryType.BOOK; else
-		 * if(type.equals("inproceedings")) return
-		 * BibtexEntryType.INPROCEEDINGS;
-		 */
-	}
-
 
     public static String SPECIAL_COMMAND_CHARS = "\"`^~'c=";
 

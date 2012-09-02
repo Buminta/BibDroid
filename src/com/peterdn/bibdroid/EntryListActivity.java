@@ -1,8 +1,8 @@
 package com.peterdn.bibdroid;
 
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.Collection;
 
 import net.sf.jabref.BibtexDatabase;
@@ -12,9 +12,9 @@ import net.sf.jabref.imports.ParserResult;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
+
 import android.util.Log;
-import android.view.MenuItem;
+
 
 public class EntryListActivity extends FragmentActivity
         implements EntryListFragment.Callbacks {

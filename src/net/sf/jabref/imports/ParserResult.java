@@ -18,15 +18,13 @@ package net.sf.jabref.imports;
 import java.io.File;
 import net.sf.jabref.BibtexEntryType;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.HashMap;
 import net.sf.jabref.BibtexDatabase;
-import net.sf.jabref.BibtexEntry;
+
 
 public class ParserResult {
 
-    public static ParserResult INVALID_FORMAT = new ParserResult(null, null, null);
-    public static ParserResult FILE_LOCKED = new ParserResult(null, null, null);
     private BibtexDatabase base;
     private HashMap<String, String> metaData;
     private HashMap<String, BibtexEntryType> entryTypes;

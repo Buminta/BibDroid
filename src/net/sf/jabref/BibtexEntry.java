@@ -30,12 +30,10 @@ Modified for use in JabRef.
 
 package net.sf.jabref;
 
-import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.*;
 
-import net.sf.jabref.export.FieldFormatter;
+
+
+import java.util.*;
 
 
 public class BibtexEntry
@@ -46,7 +44,7 @@ public class BibtexEntry
     private Map<String, String> _fields = new HashMap<String, String>();
 
     // Search and grouping status is stored in boolean fields for quick reference:
-    private boolean searchHit, groupHit;
+    private boolean groupHit;
 
     public BibtexEntry(){
     	this(Util.createNeutralId());
@@ -249,82 +247,6 @@ public class BibtexEntry
     }
     
     /**
-     * Write this entry to the given Writer, with the given FieldFormatter.
-     * @param write True if this is a write, false if it is a display. The write will
-     * not include non-writeable fields if it is a write, otherwise non-displayable fields
-     * will be ignored. Refer to GUIGlobals for isWriteableField(String) and
-     * isDisplayableField(String).
-     */
-    public void write(Writer out, FieldFormatter ff, boolean write) throws IOException {
-        // Write header with type and bibtex-key.
-        out.write("@"+_type.getName().toUpperCase(Locale.US)+"{");
-
-        String str = Util.shaveString(getField(BibtexFields.KEY_FIELD));
-        out.write(((str == null) ? "" : str)+","+Globals.NEWLINE);
-        HashMap<String, String> written = new HashMap<String, String>();
-        written.put(BibtexFields.KEY_FIELD, null);
-        boolean hasWritten = false;
-        // Write required fields first.
-        String[] s = getRequiredFields();
-        if (s != null) for (int i=0; i<s.length; i++) {
-            hasWritten = hasWritten | writeField(s[i], out, ff, hasWritten);
-            written.put(s[i], null);
-        }
-        // Then optional fields.
-        s = getOptionalFields();
-        if (s != null) for (int i=0; i<s.length; i++) {
-            if (!written.containsKey(s[i])) { // If field appears both in req. and opt. don't repeat.
-                //writeField(s[i], out, ff);
-                hasWritten = hasWritten | writeField(s[i], out, ff, hasWritten);
-                written.put(s[i], null);
-            }
-        }
-        // Then write remaining fields in alphabetic order.
-        TreeSet<String> remainingFields = new TreeSet<String>();
-        for (String key : _fields.keySet()){
-            boolean writeIt = (write ? BibtexFields.isWriteableField(key) :
-                               BibtexFields.isDisplayableField(key));
-            if (!written.containsKey(key) && writeIt)
-                       remainingFields.add(key);
-        }
-        for (String field: remainingFields)
-            hasWritten = hasWritten | writeField(field, out, ff, hasWritten);
-
-        // Finally, end the entry.
-        out.write((hasWritten ? Globals.NEWLINE : "")+"}"+Globals.NEWLINE);
-    }
-
-    /**
-     * Write a single field, if it has any content.
-     * @param name The field name
-     * @param out The Writer to send it to
-     * @param ff A formatter to filter field contents before writing
-     * @param isFirst Indicates whether this is the first field written for
-     *    this entry - if not, start by writing a comma and newline
-     * @return true if this field was written, false if it was skipped because
-     *    it was not set
-     * @throws IOException In case of an IO error
-     */
-    private boolean writeField(String name, Writer out,
-                            FieldFormatter ff, boolean isFirst) throws IOException {
-        String o = getField(name);
-        if (o != null) {
-            if (isFirst)
-                out.write(","+Globals.NEWLINE);
-            out.write("  "+name+" = ");
-
-            try {
-                out.write(ff.format(o.toString(), name));
-            } catch (Throwable ex) {
-                throw new IOException
-                    (Globals.lang("Error in field")+" '"+name+"': "+ex.getMessage());
-            }
-            return true;
-        } else
-            return false;
-    }
-
-    /**
      * Returns a clone of this entry. Useful for copying.
      */
     public Object clone() {
@@ -336,15 +258,7 @@ public class BibtexEntry
     public String toString() {
         return getType().getName()+":"+getField(BibtexFields.KEY_FIELD);
     }
-
-    public boolean isSearchHit() {
-        return searchHit;
-    }
-
-    public void setSearchHit(boolean searchHit) {
-        this.searchHit = searchHit;
-    }
-
+    
     public boolean isGroupHit() {
         return groupHit;
     }

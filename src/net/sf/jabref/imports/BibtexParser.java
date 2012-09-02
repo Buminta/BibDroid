@@ -591,7 +591,7 @@ public class BibtexParser {
 					throw new IOException("Error in line " + line + " or above: "
 						+ "Empty text token.\nThis could be caused "
 						+ "by a missing comma between two fields.");
-				value.append("#").append(textToken).append("#");
+				value.append('#').append(textToken).append('#');
 				// Util.pr(parseTextToken());
 				// throw new RuntimeException("Unknown field type");
 			}
@@ -610,30 +610,6 @@ public class BibtexParser {
 //	private String parseFieldContent() throws IOException {
 //		return parseFieldContent(null);
 //	}
-
-	/**
-	 * Check if a string at any point has had more ending braces (}) than
-	 * opening ones ({). Will e.g. return true for the string "DNA} blahblal
-	 * {EPA"
-	 * 
-	 * @param s
-	 *            The string to check.
-	 * @return true if at any index the brace count is negative.
-	 */
-	private boolean hasNegativeBraceCount(String s) {
-		// System.out.println(s);
-		int i = 0, count = 0;
-		while (i < s.length()) {
-			if (s.charAt(i) == '{')
-				count++;
-			else if (s.charAt(i) == '}')
-				count--;
-			if (count < 0)
-				return true;
-			i++;
-		}
-		return false;
-	}
 
 	/**
 	 * This method is used to parse string labels, field names, entry type and
@@ -834,9 +810,7 @@ public class BibtexParser {
 	}
 
 	private class NoLabelException extends Exception {
-		public NoLabelException(String hasRead) {
-			super(hasRead);
-		}
+		private static final long serialVersionUID = -8810027493651482203L;
 	}
 
 	private StringBuffer parseBracketedText() throws IOException {

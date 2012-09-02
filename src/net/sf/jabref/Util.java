@@ -19,10 +19,8 @@
 package net.sf.jabref;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
@@ -32,19 +30,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -156,7 +151,7 @@ public class Util {
 						result.append(s2);
 					} catch (NumberFormatException ex) {
 						// otherwise append with hashes...
-						result.append("#").append(s2).append("#");
+						result.append('#').append(s2).append('#');
 					}
 				}
 			}
@@ -461,53 +456,6 @@ public class Util {
 		return names.split(delimiter);
 	}
 
-
-	/**
-	 * Opens a file on a Windows system, using its default viewer.
-	 * 
-	 * @param link
-	 *            The file name.
-	 * @param localFile
-	 *            true if it is a local file, not an URL.
-	 * @throws IOException
-	 */
-	public static void openFileOnWindows(String link, boolean localFile) throws IOException {
-		/*
-		 * if (localFile) { String[] spl = link.split("\\\\"); StringBuffer sb =
-		 * new StringBuffer(); for (int i = 0; i < spl.length; i++) { if (i > 0)
-		 * sb.append("\\"); if (spl[i].indexOf(" ") >= 0) spl[i] = "\"" + spl[i] +
-		 * "\""; sb.append(spl[i]); } link = sb.toString(); }
-		 */
-		link = link.replaceAll("&", "\"&\"").replaceAll(" ", "\" \"");
-
-		// Bug fix for:
-		// http://sourceforge.net/tracker/index.php?func=detail&aid=1489454&group_id=92314&atid=600306
-		String cmd;
-		if (Globals.osName.startsWith("Windows 9")) {
-			cmd = "command.com /c start " + link;
-		} else {
-			cmd = "cmd.exe /c start " + link;
-		}
-
-        Runtime.getRuntime().exec(cmd);
-	}
-
-    /**
-     * Opens a file on a Windows system, using the given application.
-     *
-     * @param link The file name.
-     * @param application Link to the app that opens the file.
-     * @throws IOException
-     */
-    public static void openFileWithApplicationOnWindows(String link, String application)
-        throws IOException {
-
-        link = link.replaceAll("&", "\"&\"").replaceAll(" ", "\" \"");
-
-		Runtime.getRuntime().exec(application + " " + link);
-    }
-
-
     /**
 	 * Make sure an URL is "portable", in that it doesn't contain bad characters
 	 * that break the open command in some OSes.
@@ -667,7 +615,7 @@ public class Util {
 	 * @return
 	 */
 	public static String stripBrackets(String s) {
-		int beginIndex = (s.startsWith("[") ? 1 : 0);
+		int beginIndex = (s.length() > 0 && s.charAt(0) == '[' ? 1 : 0);
 		int endIndex = (s.endsWith("]") ? s.length() - 1 : s.length());
 		return s.substring(beginIndex, endIndex);
 	}
@@ -1240,7 +1188,7 @@ public class Util {
 						sb.append("<br>\n");
 						charsLeft = lineWidth;
 					} else {
-						sb.append(" ");
+						sb.append(' ');
 						charsLeft = lineWidth - word.length() - 1;
 					}
 				} else {

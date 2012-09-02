@@ -27,7 +27,9 @@ package net.sf.jabref;
 
 public class KeyCollisionException extends RuntimeException
 {
-    public KeyCollisionException()
+	private static final long serialVersionUID = 2204443857743056853L;
+
+	public KeyCollisionException()
     {
         super();
     }

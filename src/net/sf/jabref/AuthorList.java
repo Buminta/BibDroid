@@ -372,7 +372,7 @@ public class AuthorList {
 			case TOKEN_WORD:
 				tokens.add(orig.substring(token_start, token_end));
 				tokens.add(orig.substring(token_start, token_abbr));
-				tokens.add(new Character(token_term));
+				tokens.add(Character.valueOf(token_term));
 				tokens.add(Boolean.valueOf(token_case));
 				if (comma_first >= 0)
 					break cases;
@@ -705,7 +705,7 @@ public class AuthorList {
 				i++;
 			}
 			if (size() > 2 && oxfordComma)
-				res.append(",");
+				res.append(',');
 			if (size() > 1) {
 				res.append(" and ");
 				res.append(getAuthor(i).getLastOnly());
@@ -760,7 +760,7 @@ public class AuthorList {
 				i++;
 			}
 			if (size() > 2 && oxfordComma)
-				res.append(",");
+				res.append(',');
 			if (size() > 1) {
 				res.append(" and ");
 				res.append(getAuthor(i).getLastFirst(abbreviate));
@@ -871,7 +871,7 @@ public class AuthorList {
 				i++;
 			}
 			if (size() > 2 && oxfordComma)
-				res.append(",");
+				res.append(',');
 			if (size() > 1) {
 				res.append(" and ");
 				res.append(getAuthor(i).getFirstLast(abbr));

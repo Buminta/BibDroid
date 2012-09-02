@@ -36,10 +36,8 @@ Modified for use in JabRef
 
 package net.sf.jabref;
 
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -84,16 +82,6 @@ public class BibtexDatabase {
     public synchronized Set<String> getKeySet()
     {
         return _entries.keySet();
-    }
-
-    /**
-     * Returns an EntrySorter with the sorted entries from this base,
-     * sorted by the given Comparator.
-     */
-    public synchronized EntrySorter getSorter(Comparator<BibtexEntry> comp) {
-        EntrySorter sorter = new EntrySorter(_entries, comp);
-        addDatabaseChangeListener(sorter);
-        return sorter;
     }
 
     /**
@@ -177,35 +165,6 @@ public class BibtexDatabase {
         fireDatabaseChanged(new DatabaseChangeEvent(this, DatabaseChangeEvent.ADDED_ENTRY, entry));
 
         return checkForDuplicateKeyAndAdd(null, entry.getCiteKey(), false);
-    }
-
-    /**
-     * Removes the entry with the given string.
-     * 
-     * Returns null if not found.
-     */
-    public synchronized BibtexEntry removeEntry(String id)
-    {
-        BibtexEntry oldValue = _entries.remove(id);
-        
-        if (oldValue == null)
-            return null;
-        
-        removeKeyFromSet(oldValue.getCiteKey());
-        fireDatabaseChanged(new DatabaseChangeEvent(this, DatabaseChangeEvent.REMOVED_ENTRY, oldValue));
-
-        return oldValue;
-    }
-
-    public synchronized boolean setCiteKeyForEntry(String id, String key) {
-        if (!_entries.containsKey(id)) return false; // Entry doesn't exist!
-        BibtexEntry entry = getEntryById(id);
-        String oldKey = entry.getCiteKey();
-        if (key != null)
-          entry.setField(BibtexFields.KEY_FIELD, key);
-        else
-          entry.clearField(BibtexFields.KEY_FIELD);
-        return checkForDuplicateKeyAndAdd(oldKey, entry.getCiteKey(), false);
     }
 
     /**
@@ -406,13 +365,13 @@ public class BibtexDatabase {
     if (res.matches(".*#[^#]+#.*")) {
             StringBuffer newRes = new StringBuffer();
             int piv = 0, next = 0;
-            while ((next=res.indexOf("#", piv)) >= 0) {
+            while ((next=res.indexOf('#', piv)) >= 0) {
 
                 // We found the next string ref. Append the text
                 // up to it.
                 if (next > 0)
                     newRes.append(res.substring(piv, next));
-                int stringEnd = res.indexOf("#", next+1);
+                int stringEnd = res.indexOf('#', next+1);
                 if (stringEnd >= 0) {
                     // We found the boundaries of the string ref,
                     // now resolve that one.
@@ -499,9 +458,9 @@ public class BibtexDatabase {
                 if(allKeys.containsKey(key)){
                         // warning
                         exists=true;
-                        allKeys.put( key, new Integer( allKeys.get(key).intValue() + 1));// incrementInteger( allKeys.get(key)));
+                        allKeys.put( key, Integer.valueOf( allKeys.get(key).intValue() + 1));// incrementInteger( allKeys.get(key)));
                 }else
-                        allKeys.put( key, new Integer(1));
+                        allKeys.put( key, Integer.valueOf(1));
                 return exists;
     }
     
@@ -516,7 +475,7 @@ public class BibtexDatabase {
                         if(tI.intValue()==1)
                                 allKeys.remove( key);
                         else
-                                allKeys.put( key, new Integer( (tI).intValue() - 1));//decrementInteger( tI ));
+                                allKeys.put( key, Integer.valueOf( (tI).intValue() - 1));//decrementInteger( tI ));
                 }
     }
 

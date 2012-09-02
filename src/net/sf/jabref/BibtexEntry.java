@@ -179,8 +179,8 @@ public class BibtexEntry
     }
 
     public String getCiteKey() {
-        return (_fields.containsKey(BibtexFields.KEY_FIELD) ?
-                _fields.get(BibtexFields.KEY_FIELD) : null);
+        return (_fields.containsKey(Globals.KEY_FIELD) ?
+                _fields.get(Globals.KEY_FIELD) : null);
     }
 
     /**
@@ -256,7 +256,7 @@ public class BibtexEntry
     }
 
     public String toString() {
-        return getType().getName()+":"+getField(BibtexFields.KEY_FIELD);
+        return getType().getName()+":"+getField(Globals.KEY_FIELD);
     }
     
     public boolean isGroupHit() {

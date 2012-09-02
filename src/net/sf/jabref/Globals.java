@@ -31,6 +31,8 @@ public class Globals {
 	public static final String SIGNATURE =
 			"This file was created with JabRef";
 
+	public static final String KEY_FIELD = "bibtexkey" ;
+
 	public static String META_FLAG = "jabref-meta: ";
 	public static String META_FLAG_OLD = "bibkeeper-meta: ";
 	public static String ENTRYTYPE_FLAG = "jabref-entrytype: ";

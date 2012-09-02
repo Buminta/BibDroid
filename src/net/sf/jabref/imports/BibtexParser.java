@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 import net.sf.jabref.BibtexDatabase;
 import net.sf.jabref.BibtexEntry;
 import net.sf.jabref.BibtexEntryType;
-import net.sf.jabref.BibtexFields;
 import net.sf.jabref.BibtexString;
 import net.sf.jabref.CustomEntryType;
 import net.sf.jabref.Globals;
@@ -481,7 +480,7 @@ public class BibtexParser {
 		if ((key != null) && key.equals(""))
 			key = null;
 
-		result.setField(BibtexFields.KEY_FIELD, key);
+		result.setField(Globals.KEY_FIELD, key);
 		skipWhitespace();
 
 		while (true) {

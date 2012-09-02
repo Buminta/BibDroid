@@ -389,36 +389,6 @@ public class Util {
 		return res;
 	}
 
-
-    /**
-     * Finds all authors' last names in all the given fields for the given database.
-     * @param db The database.
-     * @param fields The fields to look in.
-     * @return a set containing the names.
-     */
-    public static Set<String> findAuthorLastNames(BibtexDatabase db, List<String> fields) {
-		Set<String> res = new TreeSet<String>();
-		for (String s : db.getKeySet()){
-			BibtexEntry be = db.getEntryById(s);
-            for (String field : fields) {
-                String val = be.getField(field);
-                if ((val != null) && (val.length() > 0)) {
-                    AuthorList al = AuthorList.getAuthorList(val);
-                    for (int i=0; i<al.size(); i++) {
-                        AuthorList.Author a = al.getAuthor(i);
-                        String lastName = a.getLast();
-                        if ((lastName != null) && (lastName.length() > 0))
-                            res.add(lastName);
-                    }
-                }
-
-            }
-		}
-
-		return res;
-	}
-    
-
 	/**
 	 * Takes a String array and returns a string with the array's elements
 	 * delimited by a certain String.
@@ -728,49 +698,6 @@ public class Util {
 			sb.append(strings[i]).append(separator);
 		}
 		return sb.append(strings[to - 1]).toString();
-	}
-
-
-	/**
-	 * Sets empty or non-existing owner fields of a bibtex entry to a specified
-	 * default value. Timestamp field is also set. Preferences are checked to
-	 * see if these options are enabled.
-	 * 
-	 * @param entry
-	 *            The entry to set fields for.
-     * @param overwriteOwner
-     *              Indicates whether owner should be set if it is already set.
-     * @param overwriteTimestamp
-     *              Indicates whether timestamp should be set if it is already set.
-	 */
-	public static void setAutomaticFields(BibtexEntry entry, boolean overwriteOwner,
-                                          boolean overwriteTimestamp) {
-		String defaultOwner = Globals.prefs.get("defaultOwner");
-		String timestamp = easyDateFormat();
-        String timeStampField = Globals.prefs.get("timeStampField");
-        boolean setOwner = Globals.prefs.getBoolean("useOwner") &&
-            (overwriteOwner || (entry.getField(BibtexFields.OWNER)==null));
-        boolean setTimeStamp = Globals.prefs.getBoolean("useTimeStamp") &&
-            (overwriteTimestamp || (entry.getField(timeStampField)==null));
-
-		setAutomaticFields(entry, setOwner, defaultOwner, setTimeStamp, timeStampField, timestamp);
-	}
-
-	private static void setAutomaticFields(BibtexEntry entry, boolean setOwner, String owner,
-		boolean setTimeStamp, String timeStampField, String timeStamp) {
-
-		// Set owner field if this option is enabled:
-		if (setOwner) {
-			// No or empty owner field?
-			// if (entry.getField(Globals.OWNER) == null
-			// || ((String) entry.getField(Globals.OWNER)).length() == 0) {
-			// Set owner field to default value
-			entry.setField(BibtexFields.OWNER, owner);
-			// }
-		}
-
-		if (setTimeStamp)
-			entry.setField(timeStampField, timeStamp);
 	}
 
 	/**
@@ -1158,30 +1085,6 @@ public class Util {
 			dateFormatter = new SimpleDateFormat(format);
 		}
 		return dateFormatter.format(date);
-	}
-
-	public static int isMarked(BibtexEntry be) {
-		Object fieldVal = be.getField(BibtexFields.MARKED);
-		if (fieldVal == null)
-			return 0;
-		String s = (String) fieldVal;
-		if (s.equals("0"))
-            return 1;
-        int index = s.indexOf(Globals.prefs.WRAPPED_USERNAME);
-        if (index >= 0)
-            return 1;
-
-        Matcher m = markNumberPattern.matcher(s);
-        if (m.find()) {
-            try {
-                int value = Integer.parseInt(m.group(1));
-                return value;
-            } catch (NumberFormatException ex) {
-                return 1;
-            }
-        }
-        else return 0;
-        
 	}
 
 	/**

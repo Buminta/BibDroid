@@ -41,6 +41,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sf.jabref.export.SaveSession;
+
 /**
  * utility functions
  */
@@ -1272,5 +1274,38 @@ public class Util {
 	T[] result = Arrays.copyOf(first, first.length + second.length);
 	System.arraycopy(second, 0, result, first.length, second.length);
 	return result;
+    }
+    
+
+    /**
+     * This method checks whether there is a lock file for the given file. If
+     * there is, it waits for 500 ms. This is repeated until the lock is gone
+     * or we have waited the maximum number of times.
+     *
+     * @param file The file to check the lock for.
+     * @param maxWaitCount The maximum number of times to wait.
+     * @return true if the lock file is gone, false if it is still there.
+     */
+    public static boolean waitForFileLock(File file, int maxWaitCount) {
+        // Check if the file is locked by another JabRef user:
+        int lockCheckCount = 0;
+        while (Util.hasLockFile(file)) {
+
+            if (lockCheckCount++ == maxWaitCount) {
+                return false;
+            }
+            try { Thread.sleep(500); } catch (InterruptedException ex) {}
+        }
+        return true;
+    }
+
+    /**
+     * Check whether a lock file exists for this file.
+     * @param file The file to check.
+     * @return true if a lock file exists, false otherwise.
+     */
+    public static boolean hasLockFile(File file) {
+        File lock = new File(file.getPath()+ SaveSession.LOCKFILE_SUFFIX);
+        return lock.exists();
     }
 }

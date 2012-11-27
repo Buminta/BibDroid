@@ -31,7 +31,9 @@ public class Globals {
 	public static final String SIGNATURE =
 			"This file was created with JabRef";
 
-	public static final String KEY_FIELD = "bibtexkey" ;
+	public static final String BIBTEX_STRING = "__string";
+
+	public static final String KEY_FIELD = "bibtexkey";
 
 	public static String META_FLAG = "jabref-meta: ";
 	public static String META_FLAG_OLD = "bibkeeper-meta: ";
@@ -40,6 +42,12 @@ public class Globals {
     public static final String FILE_FIELD = "file";
 
     public static String JOURNALS_FILE_BUILTIN = "/resource/journalList.txt";
+    
+    public static final String BACKUP_EXT = ".bak";
+
+    public static final String TYPE_HEADER = "entrytype";
+
+    public static final String COL_DEFINITION_FIELD_SEPARATOR = "/";
 
 	public static ResourceBundle messages, menuTitles, intMessages;
 
